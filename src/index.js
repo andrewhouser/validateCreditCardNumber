@@ -11,17 +11,18 @@ https://en.wikipedia.org/wiki/Luhn_algorithm
 - Result should be the check digit
 */
 
-export default function validateCreditCardNumber(ccNum) {
+exports.validateCreditCardNumber = ccNum => {
   const digits = ccNum
     .toString()
     .split('')
-    .filter(num => num)
-    .map(num => Number(num));
-  const checkSum = Number(digits.pop());
+    .filter(num => parseInt(num))
+    .map(num => Number(num))
+    .reverse();
+  const checkSum = digits.shift();
 
   let total = 0;
 
-  digits.reverse().forEach((digit, i) => {
+  digits.forEach((digit, i) => {
     if (i % 2 !== 0) {
       total += digit;
     } else {
@@ -40,4 +41,4 @@ export default function validateCreditCardNumber(ccNum) {
   const checkVal = lastTotal === 0 ? 0 : 10 - lastTotal;
 
   return checkVal === checkSum;
-}
+};
